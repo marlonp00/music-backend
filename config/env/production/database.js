@@ -1,14 +1,19 @@
+const { parse } = require("pg-connection-string");
 
-module.exports = ({ env }) => ({
-  connection: {
-    client: 'postgres',
+module.exports = ({ env }) => {
+  const { host, port, database, user, password } = parse(env("DATABASE_URL"));
+
+  return {
     connection: {
-      host: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}`, // for a PostgreSQL database
-      // ⚠️ For a MySQL database, use socketPath: `/cloudsql/${env('INSTANCE_CONNECTION_NAME')}` instead
-      database: env('DATABASE_NAME'),
-      user: env('DATABASE_USER'),
-      password: env('DATABASE_PASSWORD'),
+      client: "postgres",
+      connection: {
+        host,
+        port,
+        database,
+        user,
+        password,
+      },
+      debug: false,
     },
-  },
-});
- 
+  };
+};
