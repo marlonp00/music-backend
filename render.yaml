@@ -28,3 +28,6 @@ services:
         generateValue: true
       - key: APP_KEYS
         generateValue: true
+databases:
+  - name: Music_Backend
+    plan: free
